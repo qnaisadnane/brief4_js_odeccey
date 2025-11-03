@@ -445,6 +445,45 @@
     padding: 0 0 0 10px;
     border: 2px solid #000;
 }
+
+.all-mission{
+    width: 350px;
+    height: 50px;
+    background-color: rgb(64, 129, 234);
+    color: #fff;
+    margin: 0 0 0 50px;
+    font-size: 25px;
+    padding: 0 0 0 10px;
+    border: 2px solid #000;
+}
+
+.my-mission{
+    width: 350px;
+    height: 50px;
+    background-color: rgb(64, 129, 234);
+    color: #fff;
+    margin: 0 0 0 50px;
+    font-size: 25px;
+    padding: 0 0 0 10px;
+    border: 2px solid #000;
+}
+
+.favori-mission{
+    width: 350px;
+    height: 50px;
+    background-color: rgb(64, 129, 234);
+    color: #fff;
+    margin: 0 0 0 50px;
+    font-size: 25px;
+    padding: 0 0 0 10px;
+    border: 2px solid #000;
+}
+
+.filter-mission{
+    display: flex;
+    flex-direction: row;
+}
+
 .icon_edit{
     width: 60px;
     height: 60px;
@@ -464,6 +503,24 @@
     border: none;
     border-radius: 1rem;
     margin: 0 0 0 10px;
+}
+
+.icon_favorite{
+    width: 60px;
+    height: 60px;
+    background-color: #000;
+    color: #fff;
+    font-size: 25px;
+    border: none;
+    border-radius: 1rem;
+    margin: 0 0 0 10px;
+}
+
+.fav-img{
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+
 }
 
 .missions-grid {

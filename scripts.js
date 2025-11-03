@@ -1,5 +1,7 @@
 let missions = [];
-let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+let favorites = JSON.parse(localStorage.getItem('missionFavorites')) || [];
+
+
 
 // ===============================
 // 1. CHARGEMENT DES DONNES
@@ -23,29 +25,34 @@ async function loadMissions() {
 // ===============================
 // 2. AFFICHAGE DES MISSIONS
 // ===============================
-
+ 
 
 function displayMissions(list) {                      
   const container = document.getElementById('missions');
   container.innerHTML = '';
+  
+  list.forEach(mission => { 
 
-  list.forEach(missions => { 
+    const isFavorite = favorites.includes(mission.id);
     
    const card = `
       <div class="mission-card">
         <div class="mission-image-container">
-          <img src="${missions.image}" alt="${missions.name}" class="mission-image">
+          <img src="${mission.image}" alt="${mission.name}" class="mission-image">
         </div>
         <div class="mission-info">
-          <h2>${missions.name}</h2>
-          <p><strong>Agence :</strong> ${missions.agency}</p>
-          <p class="goal"><strong>Objectif :</strong> ${missions.objective}</p>
-          <p class="date"><strong>Date de lancement :</strong> ${missions.launchDate}</p>
-          <button class="icon_edit" onclick="editMission(${missions.id})">
+          <h2>${mission.name}</h2>
+          <p><strong>Agence :</strong> ${mission.agency}</p>
+          <p class="goal"><strong>Objectif :</strong> ${mission.objective}</p>
+          <p class="date"><strong>Date de lancement :</strong> ${mission.launchDate}</p>
+          <button class="icon_edit" onclick="editMission(${mission.id})">
             <i class="fa-solid fa-pen"></i>
           </button>
-          <button class="icon_delete" onclick="deleteMission(${missions.id})"> <i class="fa-solid fa-trash"> </i> </button>
-
+          <button class="icon_delete" onclick="deleteMission(${mission.id})"> <i class="fa-solid fa-trash"> </i> </button>
+          <button class="icon_favorite" data-id="${mission.id}">
+            <img src="${isFavorite ? 'assets/star1.png' : 'assets/star.png'}" 
+                 alt="Favorite" class="fav-img">
+          </button>
         </div>
       </div>
     `;
@@ -72,6 +79,7 @@ function searchMissions(){
  
       mission.name.toLowerCase().includes(searchText) ||
       mission.objective.toLowerCase().includes(searchText) ||
+      mission.agency.toLowerCase().includes(searchText) ||
       mission.launchDate.toLowerCase().includes(searchText)
     );
   
@@ -83,18 +91,82 @@ function searchMissions(){
 }
 
 function filterByAgency(agency) {
+
+
   // TODO: Filtrer selon lâ€™agence sÃ©lectionnÃ©e dans un menu dÃ©roulant
   // Si "all" est sÃ©lectionnÃ©, afficher toutes les missions
+}
+
+function showFavorites(){
+  const favoriteMissions = missions.filter(m => favorites.includes(m.id));
+
+  displayMissions(favoriteMissions);
+
 }
 
 // ===============================
 // 4. FAVORIS (Bonus)
 // ===============================
-function toggleFavorite(id) {
+
+   function toggleFavorite(missionId, button) {
+  const img = button.querySelector('.fav-img');
+  const index = favorites.indexOf(missionId);
+   
+ if (index === -1) {
+
+  favorites.push(missionId);
+    img.src = "assets/star.png"; 
+  } else {
+
+    favorites.splice(index, 1);
+    img.src = "assets/star1.png";
+  }
+  
+  localStorage.setItem('missionFavorites', JSON.stringify(favorites));
+
+  if (document.querySelector('.favori-mission').classList.contains('active')) {
+    showFavorites();  
+  } else {
+    displayMissions(missions); 
+  }
+
+  }
+
+  function showFavorites() {
+  const favoriteMissions = missions.filter(m => favorites.includes(m.id));
+  displayMissions(favoriteMissions);
+  }
+
+  function showAllMissions() {
+  displayMissions(missions);
+   }
+
+  document.addEventListener('DOMContentLoaded', () => {
+  loadMissions();
+
+  
+  document.getElementById('search_mission').addEventListener('input', searchMissions);
+
+  
+  document.querySelector('.favori-mission').addEventListener('click', showFavorites);
+
+
+  document.querySelector('.all-mission').addEventListener('click', () => displayMissions(missions));
+
+  
+  document.getElementById('missions').addEventListener('click', (e) => {
+    const btn = e.target.closest('.icon_favorite');
+    if (!btn) return;
+
+    const missionId = parseInt(btn.dataset.id);
+    toggleFavorite(missionId, btn);
+  });
+});
+
   // TODO: Ajouter ou retirer un favori selon sâ€™il est dÃ©jÃ  dans la liste
   // Mets Ã  jour le localStorage aprÃ¨s chaque modification
   // Affiche un message ou un style visuel (Ã©toile jaune, etc.)
-}
+
 
 // ===============================
 // 5. CRUD - AJOUT, Ã‰DITION, SUPPRESSION
@@ -170,6 +242,8 @@ function validateForm(data) {
   // BONUS : Utiliser Regex pour valider les emails et formats de dates
   // Retourne true ou false
 }
+
+
 
 // ===============================
 // 7. INITIALISATION ET Ã‰VÃ‰NEMENTS
