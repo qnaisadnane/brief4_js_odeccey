@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="css/style.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+     <script src="scripts.js"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Missions</title>
+</head>
+<body>
+     <header>
+  <div class="navbar-top">
+    <img src="assets/logo.png" alt="logo" class="navbar-logo">
+    <div class="navbar-center">
+      <input type="text" placeholder="Search" class="navbar-input">
+    </div>
+    <p class="navbar-lang">English
+         <img src="assets/Icon pack.png" alt="arrow" class="navbar-arrow">
+    </p>
+    <div class="navbar-icons">
+      <img src="assets/notification.png" alt="bell" class="navbar-bell">
+      <img src="assets/Ellipse 1.png" alt="avatar" class="navbar-ellipse">
+    </div>
+  </div>
+
+  <div class="navbar-bottom">
+    <div class="navbar-social">
+      <img src="assets/instagram.png" alt="instagram">
+      <img src="assets/twitter.png" alt="twitter">
+      <img src="assets/be.png" alt="behance">
+    </div>
+
+    <nav class="navbar-menu">
+      <a href="index.html">HOME</a>
+      <a href="about.html">ABOUT US</a>
+      <a href="#">MEDIA</a>
+      <a href="#">TECH</a>
+      <a href="#">MEMBERS</a>
+      <a href="planets.html">PLANETS</a>
+      <a href="missions.html">MISSIONS</a>
+    </nav>
+    <button class="navbar-contact"><a href="contact_us.html">Contact Us</a></button>
+  </div>
+</header>
+
+    <section class="missions-section">
+    <h1>Space Missions</h1>
+     <div class="search-add-mission">
+    <input class="search-mission" type="text" id="search_mission" onkeyup="searchMissions()" placeholder="Search" name="search_mission">
+    <button class="add-mission" onclick="openAddForm()"> Add Mission </button>
+    <div id="add-form-container">
+        <h3>Add Mission</h3>
+
+        <input type="text" id="new-name" placeholder="Name"><br>
+        <input type="text" id="new-agency" placeholder="Agency"><br>
+        <textarea id="new-objective" placeholder="Objective"></textarea><br>
+        <input type="date" id="new-date"><br>
+        <input type="file" id="new-image" ><br>
+
+        <button onclick="addMission()">Ajouter</button>
+        <button onclick="closeAddForm()">Annuler</button>
+
+    </div>
+    </div>
+    <div class="missions-grid" id="missions"> 
+     <!-- 
+        <div class="mission-card">
+            <div class="mission-image-container">
+                <img src="assets/apollo11.png" alt="Apollo 11 astronaut on the moon" class="mission-image">
+            </div>
+            <div class="mission-info">
+                <h2>mission.nom</h2>
+                <p><strong>Agency:</strong> NASA (USA)</p>
+                <p class="goal"><strong>Goal:</strong> First crewed mission to land humans on the Moon and return them safely to Earth.</p>
+                <p class="date"><strong>Launch Date:</strong> July 16, 1969</p>
+            </div>
+        </div>
+
+        <div class="mission-card">
+            <div class="mission-image-container">
+                <img src="assets/voyager1.png" alt="Astronaut outside space station" class="mission-image">
+            </div>
+            <div class="mission-info">
+                <h2>Voyager 1</h2>
+                <p><strong>Agency:</strong> NASA (USA)</p>
+                <p class="goal"><strong>Goal:</strong> Study the outer Solar System (Jupiter, Saturn) and interstellar space.</p>
+                <p class="date"><strong>Launch Date:</strong> September 5, 1977</p>
+            </div>
+        </div>
+
+        <div class="mission-card">
+            <div class="mission-image-container">
+                <img src="assets/hubble.png" alt="Star cluster" class="mission-image">
+            </div>
+            <div class="mission-info">
+                <h2>Hubble Space Telescope</h2>
+                <p><strong>Agency:</strong> NASA & ESA (USA/Europe)</p>
+                <p class="goal"><strong>Goal:</strong> Space-based observatory to capture deep-space images and study galaxies, stars, and planets.</p>
+                <p class="date"><strong>Launch Date:</strong> April 24, 1990</p>
+            </div>
+        </div>
+
+        <div class="mission-card">
+            <div class="mission-image-container">
+                <img src="assets/mars_path.png" alt="Astronaut on Mars" class="mission-image">
+            </div>
+            <div class="mission-info">
+                <h2>Mars Pathfinder</h2>
+                <p><strong>Agency:</strong> NASA (USA)</p>
+                <p class="goal"><strong>Goal:</strong> Demonstrate a low-cost way to deliver a lander and rover to Mars, study Martian geology and atmosphere.</p>
+                <p class="date"><strong>Launch Date:</strong> December 4, 1996</p>
+            </div>
+        </div>
+
+        <div class="mission-card">
+            <div class="mission-image-container">
+                <img src="assets/curiosity.png" alt="curiosity rover" class="mission-image">
+            </div>
+            <div class="mission-info">
+                <h2>Curiosity Rover</h2>
+                <p><strong>Agency:</strong> NASA (USA)</p>
+                <p class="goal"><strong>Goal:</strong> Explore Gale Crater on Mars to study habitability and search for signs of microbial life.</p>
+                <p class="date"><strong>Launch Date:</strong>November 26, 2011</p>
+            </div>
+        </div>
+
+        <div class="mission-card">
+            <div class="mission-image-container">
+                <img src="assets/rosetta.png" alt="Rosetta" class="mission-image">
+            </div>
+            <div class="mission-info">
+                <h2>Rosetta</h2>
+                <p><strong>Agency:</strong>ESA (Europe)</p>
+                <p class="goal"><strong>Goal:</strong> First mission to orbit and land a probe (Philae) on a comet (67P/Churyumov–Gerasimenko).</p>
+                <p class="date"><strong>Launch Date:</strong> March 2, 2004</p>
+            </div>
+        </div>
+
+        <div class="mission-card">
+            <div class="mission-image-container">
+                <img src="assets/james.png" alt="James" class="mission-image">
+            </div>
+            <div class="mission-info">
+                <h2>James Webb Space Telescope</h2>
+                <p><strong>Agency:</strong>NASA & ESA (USA/Europe)</p>
+                <p class="goal"><strong>Goal:</strong> Successor to Hubble; study the early universe, exoplanets, and cosmic formation.</p>
+                <p class="date"><strong>Launch Date:</strong> April 24, 1990</p>
+            </div>
+        </div>
+
+        <div class="mission-card">
+            <div class="mission-image-container">
+                <img src="assets/Artemis-1.png" alt="Artemis" class="mission-image">
+            </div>
+            <div class="mission-info">
+                <h2>Artemis I</h2>
+                <p><strong>Agency:</strong>NASA (USA)</p>
+                <p class="goal"><strong>Goal:</strong>Uncrewed test flight around the Moon as part of the Artemis program to return humans to the Moon.</p>
+                <p class="date"><strong>Launch Date:</strong>November 16, 2022</p>
+            </div>
+        </div>
+
+        
+        <div class="mission-card">
+            <div class="mission-image-container">
+                <img src="assets/change4.png" alt="Chang’e" class="mission-image">
+            </div>
+            <div class="mission-info">
+                <h2>Chang’e 4</h2>
+                <p><strong>Agency:</strong>CNSA (China)</p>
+                <p class="goal"><strong>Goal:</strong> First mission to successfully land on the far side of the Moon, carrying rover Yutu-2.</p>
+                <p class="date"><strong>Launch Date:</strong>December 7, 2018</p>
+            </div>
+        </div>
+
+        <div class="mission-card">
+            <div class="mission-image-container">
+                <img src="assets/perserverance_rover.png" alt="Perseverance" class="mission-image">
+            </div>
+            <div class="mission-info">
+                <h2>Perseverance Rover</h2>
+                <p><strong>Agency:</strong>NASA (USA)</p>
+                <p class="goal"><strong>Goal:</strong>Search for signs of ancient life on Mars, collect rock samples, and test technologies for future missions.</p>
+                <p class="date"><strong>Launch Date:</strong>July 30, 2020</p>
+            </div>
+        </div>
+           -->
+        
+    </div>
+  
+</section>
+
+    <footer class="footer">
+    <div class="footer-content">
+        <div class="footer-columns">
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookies</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Information</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Subscribe</h3>
+                <div class="subscribe-form">
+                    <input type="email" placeholder="Email address">
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-logo">
+                <img src="assets/logo.png" alt="Charles Ostman">
+            </div>
+            <div class="footer-links">
+                <a href="#">Terms</a>
+                <a href="#">Privacy</a>
+                <a href="#">Cookies</a>
+            </div>
+            <div class="footer-social">
+                <span class="footer-social-icon"><i class="fa-brands fa-linkedin"></i></span>
+                <span class="footer-social-icon"><i class="fa-brands fa-facebook"></i></span>
+                <span class="footer-social-icon"><i class="fa-brands fa-x-twitter"></i></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+
+</html>
