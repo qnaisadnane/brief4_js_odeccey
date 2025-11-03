@@ -237,13 +237,101 @@ function deleteMission(id) {
 // ===============================
 // 6. VALIDATION DE FORMULAIRE
 // ===============================
-function validateForm(data) {
-  // TODO: VÃ©rifier que tous les champs obligatoires sont remplis
-  // BONUS : Utiliser Regex pour valider les emails et formats de dates
-  // Retourne true ou false
+function validateForm() {
+  const fields = ['first-name', 'last-name', 'email', 'phone-number', 'message'];
+  fields.forEach(id => clearError(id));
+
+  const firstName = document.getElementById('first-name').value.trim();
+  const lastName = document.getElementById('last-name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone-number').value.trim();
+  const message = document.getElementById('message').value.trim();
+  const subjectChecked = document.querySelector('input[name="subject"]:checked');
+
+  let isValid = true;
+  let errorMessage = '';
+
+  if (!firstName) {
+    errorMessage += 'Le prénom est obligatoire.\n';
+    highlightError('first-name');
+    isValid = false;
+  }
+  if (!lastName) {
+    errorMessage += 'Le nom est obligatoire.\n';
+    highlightError('last-name');
+    isValid = false;
+  }
+  if (!email) {
+    errorMessage += 'L\'email est obligatoire.\n';
+    highlightError('email');
+    isValid = false;
+  }
+  if (!phone) {
+    errorMessage += 'Le téléphone est obligatoire.\n';
+    highlightError('phone-number');
+    isValid = false;
+  }
+  if (!message) {
+    errorMessage += 'Le message est obligatoire.\n';
+    highlightError('message');
+    isValid = false;
+  }
+
+  if (firstName && firstName.length < 3) {
+    errorMessage += 'Le prénom doit contenir au moins 3 lettres.\n';
+    highlightError('first-name');
+    isValid = false;
+  }
+  if (lastName && lastName.length < 3) {
+    errorMessage += 'Le nom doit contenir au moins 3 lettres.\n';
+    highlightError('last-name');
+    isValid = false;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (email && !emailRegex.test(email)) {
+    errorMessage += 'Veuillez entrer un email valide (ex: user@domaine.com).\n';
+    highlightError('email');
+    isValid = false;
+  }
+
+  const phoneRegex = /^\d{10}$/;
+  if (phone && !phoneRegex.test(phone)) {
+    errorMessage += 'Le téléphone doit contenir exactement 10 chiffres.\n';
+    highlightError('phone-number');
+    isValid = false;
+  }
+
+  if (!subjectChecked) {
+    errorMessage += 'Veuillez sélectionner un sujet.\n';
+    isValid = false;
+  }
+
+  if (!isValid) {
+    alert(errorMessage.trim());
+    return false; 
+  }
+
+  window.location.href = 'contact_us_success.html';
+  return false; 
 }
 
 
+function highlightError(fieldId) {
+  const el = document.getElementById(fieldId);
+  if (el) {
+    el.style.borderColor = 'red';
+    el.classList.add('error');
+  }
+}
+
+function clearError(fieldId) {
+  const el = document.getElementById(fieldId);
+  if (el) {
+    el.style.borderColor = '';
+    el.classList.remove('error');
+  }
+}
 
 // ===============================
 // 7. INITIALISATION ET Ã‰VÃ‰NEMENTS

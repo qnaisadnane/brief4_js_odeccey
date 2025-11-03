@@ -29,6 +29,25 @@ header {
     border-radius: 8px;
 }
 
+.form-input {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  font-family: inherit;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.form-input.error {
+  border-color: red ;
+  background-color: #ffe6e6;
+}
 
 
 .navbar-arrow { 
