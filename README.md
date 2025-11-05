@@ -17,6 +17,15 @@ After launching the static version of the site using HTML/CSS, we are now enhanc
 This project focuses on **front-end JavaScript mastery**, DOM manipulation, event handling, local storage, and CRUD operations — all without any external frameworks.
 
 ---
+## 🎯 Screenshots
+
+
+
+![Trello](screenshots/1.png)
+![Space Missions Screenshot](screenshots/2.png)
+![Space Missions Screenshot](screenshots/3.png)
+![Space Missions Screenshot](screenshots/4.png)
+
 
 ## 🎯 Project Goals
 
