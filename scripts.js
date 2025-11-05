@@ -289,3 +289,201 @@ function deleteMission(id) {
     updateFavoriteCount();
   }
 }
+
+function validateForm(event) {
+  event.preventDefault();
+
+  let isValid = true;
+
+  document.querySelectorAll('.error-message').forEach(span => {
+    span.textContent = '';
+    span.style.display = 'none';
+  });
+  document.querySelectorAll('.form-input, textarea').forEach(input => {
+    input.style.borderBottom = '1px solid #ccc';
+  });
+
+  const firstName = document.getElementById('first-name').value.trim();
+  const lastName = document.getElementById('last-name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone-number').value.trim();
+  const message = document.getElementById('message').value.trim();
+  const subjectSelected = document.querySelector('input[name="subject"]:checked');
+
+  if (!firstName) {
+    showError('error-first-name', 'First name is required');
+    highlightInput('first-name');
+    isValid = false;
+  }
+
+  if (!lastName) {
+    showError('error-last-name', 'Last name is required');
+    highlightInput('last-name');
+    isValid = false;
+  }
+
+  if (!email) {
+    showError('error-email', 'Email is required');
+    highlightInput('email');
+    isValid = false;
+  } else if (!isValidEmail(email)) {
+    showError('error-email', 'Please enter a valid email');
+    highlightInput('email');
+    isValid = false;
+  }
+
+  if (!phone) {
+    showError('error-phone-number', 'Phone number is required');
+    highlightInput('phone-number');
+    isValid = false;
+  }
+
+  if (!subjectSelected) {
+    showError('error-subject', 'Please select a subject');
+    isValid = false;
+  }
+
+  if (!message) {
+    showError('error-message', 'Message is required');
+    highlightTextarea('message');
+    isValid = false;
+  }
+
+  if (isValid) {
+    alert('Form submitted successfully!'); 
+    document.getElementById('contact-form').reset();
+  }
+
+  return isValid;
+}
+
+function showError(spanId, message) {
+  const errorSpan = document.getElementById(spanId);
+  errorSpan.textContent = message;
+  errorSpan.style.display = 'block';
+  errorSpan.style.color = '#e63946';
+  errorSpan.style.fontSize = '14px';
+  errorSpan.style.marginTop = '6px';
+}
+
+function highlightInput(inputId) {
+  const input = document.getElementById(inputId);
+  input.style.borderBottom = '2px solid #e63946';
+}
+
+function highlightTextarea(textareaId) {
+  const textarea = document.getElementById(textareaId);
+  textarea.style.borderBottom = '2px solid #e63946';
+}
+
+function isValidEmail(email) {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+}
+
+function validateAndSubmit(event) {
+  event.preventDefault();
+
+  let isValid = true;
+
+  document.querySelectorAll('.error-message').forEach(span => {
+    span.textContent = '';
+    span.style.display = 'none';
+  });
+  document.querySelectorAll('.form-input, textarea').forEach(el => {
+    el.style.borderBottom = '1px solid #ccc';
+    el.classList.remove('error');
+  });
+
+  const firstName = document.getElementById('first-name').value.trim();
+  const lastName = document.getElementById('last-name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone-number').value.trim();
+  const message = document.getElementById('message').value.trim();
+  const subjectSelected = document.querySelector('input[name="subject"]:checked');
+
+  if (!firstName) {
+    showError('error-first-name', 'First name is required');
+    highlightInput('first-name');
+    isValid = false;
+  } else if (firstName.length < 3) {
+    showError('error-first-name', 'First name must be at least 3 letters');
+    highlightInput('first-name');
+    isValid = false;
+  }
+
+  if (!lastName) {
+    showError('error-last-name', 'Last name is required');
+    highlightInput('last-name');
+    isValid = false;
+  } else if (lastName.length < 3) {
+    showError('error-last-name', 'Last name must be at least 3 letters');
+    highlightInput('last-name');
+    isValid = false;
+  }
+
+  if (!email) {
+    showError('error-email', 'Email is required');
+    highlightInput('email');
+    isValid = false;
+  } else if (!email.includes('@') || !email.includes('.')) {
+    showError('error-email', 'email must contain @ and .');
+    highlightInput('email');
+    isValid = false;
+  } else if (!isValidEmail(email)) {
+    showError('error-email', 'Please enter a valid email');
+    highlightInput('email');
+    isValid = false;
+  }
+
+  const phoneDigits = phone.replace(/\D/g, ''); 
+  if (!phone) {
+    showError('error-phone-number', 'Phone number is required');
+    highlightInput('phone-number');
+    isValid = false;
+  } else if (phoneDigits.length !== 10) {
+    showError('error-phone-number', 'Phone must be exactly 10 nbrs');
+    highlightInput('phone-number');
+    isValid = false;
+  }
+
+  if (!subjectSelected) {
+    showError('error-subject', 'Please select a subject');
+    isValid = false;
+  }
+
+  if (!message) {
+    showError('error-message', 'Message is required');
+    highlightTextarea('message');
+    isValid = false;
+  }
+
+  if (isValid) {
+    window.location.href = 'contact_us_success.html';
+  }
+
+  return isValid;
+}
+
+function showError(spanId, message) {
+  const span = document.getElementById(spanId);
+  span.textContent = message;
+  span.style.display = 'block';
+}
+
+function highlightInput(id) {
+  const input = document.getElementById(id);
+  input.style.borderBottom = '2px solid #e63946';
+  input.classList.add('error');
+}
+
+function highlightTextarea(id) {
+  const textarea = document.getElementById(id);
+  textarea.style.borderBottom = '2px solid #e63946';
+  textarea.classList.add('error');
+}
+
+function isValidEmail(email) {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+}
