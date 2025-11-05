@@ -421,15 +421,8 @@
     color: #000;
 }
 
-.search-add-mission {
-    display: flex;
-    flex-direction: row;
-    gap: 90px;
-    margin: 0 0 30px 170px;
-}
-
 .search-mission{
-    margin: 0 0 0 40px;
+    /* margin: 0 0 0 40px; */
     width: 350px;
     height: 50px;
     font-size: 25px;

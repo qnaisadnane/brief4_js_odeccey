@@ -32,18 +32,32 @@ header {
 #agency-filter {
   padding: 8px 12px;
   border: 1px solid #ccc;
-  border-radius: 6px;
   font-size: 14px;
   margin-left: 10px;
   background: white;
   cursor: pointer;
+  width: 350px;
+  height: 50px;
+  font-size: 25px;
+  border: 2px solid #000;
 }
-
+#year-filter {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  margin-left: 10px;
+  background: white;
+  cursor: pointer;
+  width: 350px;
+  height: 50px;
+  font-size: 25px;
+  border: 2px solid #000;
+}
 .search-add-mission {
   display: flex;
-  align-items: center;
+  justify-content: space-around;
   gap: 10px;
-  flex-wrap: wrap;
+  margin: 0 0 40px 0;
 }
 
 #add-form-container{
@@ -115,11 +129,7 @@ textarea.error {
   box-sizing: border-box;
 }
 
-.navbar-arrow { 
-    width: 20px; 
-    height: 20px; 
-    margin-left: 8px; 
-}
+
 .navbar-center { 
     display: flex; 
     align-items: center; 
@@ -135,15 +145,147 @@ textarea.error {
     font-size: 16px;
     background-size: 18px 18px;
 }
-.navbar-lang { 
-    color: #fff; 
-    font-family: 'Poppins', sans-serif; 
-    font-weight: 100; 
-    font-size: 16px; 
-    margin-left: 30px; 
-    display: flex; 
-    align-items: center; 
+.navbar_favorit_btn{
+    display: flex;
+    align-items: center;
+    gap: 3px;
+     width: 80px;
+     height: 45px;
+     background: none;
+     border: 2px solid #fff;
+     border-radius: 10px;
+     padding: 0 20px 0 0 ;
 }
+
+.fav-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #1a1a2e;
+  color: white;
+}
+
+.fav-top h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.fav-bt {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.4rem;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: 0.2s
+}
+.fav-mis {
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 10px;
+}
+.fav-mission-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  transition: 0.2s;
+}
+.fav-mission-item img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 12px;
+}
+
+.fav-mission-item h4 {
+  margin: 0 0 4px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.fav-mission-item p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.remove-fav {
+  color: white;
+  border: none;
+  width: 35px;
+  height: 35px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.fav-mis p {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  padding: 30px 20px;
+  margin: 0;
+}
+
+.navbar_favorit_btn {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px;
+}
+
+.navbar_favorit_btn img {
+  width: 24px;
+  height: 24px;
+}
+
+#favBtn-num {
+  background: #ff4444;
+  color: white;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.favorit_missions_card {
+  display: none;
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  width: 600px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  z-index: 1000;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+.navbar_favorit_btn img{
+     width: 40px;
+     height: 40px;
+     
+}
+
+
 .arrow { 
     font-size: 12px; 
     margin-left: 4px; 
