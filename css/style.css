@@ -21,12 +21,35 @@ header {
     padding: 0 32px; gap: 16px;
 }
 
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+  min-height: 16px;
+}
+
+#agency-filter {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-left: 10px;
+  background: white;
+  cursor: pointer;
+}
+
+.search-add-mission {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 #add-form-container{
     display: none; 
     margin: 20px 0; 
     padding: 15px; 
-    border: 1px solid #ccc; 
-    border-radius: 8px;
 }
 
 .form-input {
@@ -39,16 +62,58 @@ header {
   font-family: inherit;
 }
 
-.form-input:focus {
-  outline: none;
-  border-color: #007bff;
+.form-input.error,
+textarea.error {
+  border-color: red !important;
+  box-shadow: 0 0 3px red;
 }
 
-.form-input.error {
-  border-color: red ;
-  background-color: #ffe6e6;
+.modal{
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
 }
 
+.modal-content{
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    border: none;
+    position: relative;
+}
+
+.modal-content h3{
+    margin-top: 0;
+  color: #1a5fb4;
+  text-align: center;
+}
+
+.modal-content label {
+  display: block;
+  margin-top: 12px;
+  font-weight: bold;
+  color: #333;
+}
+
+.new-name,.new-agency,
+.new-date,.new-image,
+.new-objective{
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
 
 .navbar-arrow { 
     width: 20px; 
@@ -88,7 +153,8 @@ header {
     align-items: center;
     gap: 8px; 
 }
-.navbar-bell { 
+
+.navbar-star { 
     width: 40px; 
     height: 40px; 
     margin-left: 8px; 

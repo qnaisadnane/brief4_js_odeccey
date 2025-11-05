@@ -23,7 +23,6 @@
          <img src="assets/Icon pack.png" alt="arrow" class="navbar-arrow">
     </p>
     <div class="navbar-icons">
-      <img src="assets/notification.png" alt="bell" class="navbar-bell">
       <img src="assets/Ellipse 1.png" alt="avatar" class="navbar-ellipse">
     </div>
   </div>
@@ -52,25 +51,56 @@
     <h1>Space Missions</h1>
      <div class="search-add-mission">
     <input class="search-mission" type="text" id="search_mission" onkeyup="searchMissions()" placeholder="Search" name="search_mission">
-    <button class="add-mission" onclick="openAddForm()"> Add Mission </button>
-    <div id="add-form-container">
-        <h3>Add Mission</h3>
+    
+    <select id="agency-filter" onchange="filterMissions()">
+    <option value="">Agency</option>
+    <option value="NASA">NASA</option>
+    <option value="ESA">ESA</option>
+    <option value="NASA/ESA/CSA">NASA/ESA/CSA</option>
+    <option value="ESA/JAXA">ESA/JAXA</option>
+  </select>
 
-        <input type="text" id="new-name" placeholder="Name"><br>
-        <input type="text" id="new-agency" placeholder="Agency"><br>
-        <textarea id="new-objective" placeholder="Objective"></textarea><br>
-        <input type="date" id="new-date"><br>
-        <input type="file" id="new-image" ><br>
+  <select id="year-filter" onchange="filterMissions()">
+    <option value="">Years</option>
+    <option value="1969">1969</option>
+    <option value="1977">1977</option>
+    <option value="2004">2004</option>
+    <option value="2011">2011</option>
+    <option value="2018">2018</option>
+    <option value="2021">2021</option>
+    <option value="2022">2022</option>
+  </select>
 
-        <button onclick="addMission()">Ajouter</button>
-        <button onclick="closeAddForm()">Annuler</button>
+    <div id="add-form-container" class="modal" style="display: none;">
+  <div class="modal-content">
+    <h3  id="modal-title" class="modal_title">Add Mission</h3>
 
-    </div>
+    <form id="add-mission-form">
+      <input type="hidden" id="edit-index" value="-1">
+       
+      <label>Name</label>
+      <input type="text" id="new-name" class="new-name" placeholder="Name"><br>
+      <label>Agency</label>
+      <input type="text" id="new-agency" class="new-name" placeholder="Agency"><br>
+      <label>Objective</label>
+      <textarea id="new-objective" class="new-objective" placeholder="Objective"></textarea><br>
+      <label>Date</label>
+      <input type="date" class="new-date" id="new-date"><br>
+      <label>Image</label>
+      <input type="url" class="new-image" id="new-image"><br>
+        
+      <button type="button" class="buttons-btn" id="submit-btn">Add</button>
+      <button type="button" class="buttons-btn" onclick="closeAddForm()">Cancel</button>
+    </form>
+  </div>
+</div>
     </div>
 
     <div class="filter-mission">
     <button class="all-mission" onclick="showAllMissions()"> All Missions </button>
     <button class="favori-mission"> Favori Mission </button>
+    <button class="add-mission" onclick="openAddForm()"> Add Mission </button>
+
     </div>
     <div class="missions-grid" id="missions"> 
      <!-- 

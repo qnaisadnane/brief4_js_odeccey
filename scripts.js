@@ -2,7 +2,6 @@ let missions = [];
 let favorites = JSON.parse(localStorage.getItem('missionFavorites')) || [];
 
 
-
 // ===============================
 // 1. CHARGEMENT DES DONNES
 // ===============================
@@ -45,6 +44,7 @@ function displayMissions(list) {
           <p><strong>Agence :</strong> ${mission.agency}</p>
           <p class="goal"><strong>Objectif :</strong> ${mission.objective}</p>
           <p class="date"><strong>Date de lancement :</strong> ${mission.launchDate}</p>
+      
           <button class="icon_edit" onclick="editMission(${mission.id})">
             <i class="fa-solid fa-pen"></i>
           </button>
@@ -53,6 +53,7 @@ function displayMissions(list) {
             <img src="${isFavorite ? 'assets/star1.png' : 'assets/star.png'}" 
                  alt="Favorite" class="fav-img">
           </button>
+          
         </div>
       </div>
     `;
@@ -68,34 +69,45 @@ document.addEventListener('DOMContentLoaded', loadMissions);
 // 3. RECHERCHE ET FILTRAGE
 // ===============================
 function searchMissions(){
-    const searchInput = document.getElementById('search_mission');
-    const searchText = searchInput.value.trim().toLowerCase();
+    filterMissions();
 
-    if(searchText === ''){
-      displayMissions(missions);
-      return;
-    }
-    const filtered = missions.filter(mission => 
- 
-      mission.name.toLowerCase().includes(searchText) ||
-      mission.objective.toLowerCase().includes(searchText) ||
-      mission.agency.toLowerCase().includes(searchText) ||
-      mission.launchDate.toLowerCase().includes(searchText)
+}
+
+function filterMissions() {
+  const selectedAgency = document.getElementById('agency-filter').value;
+  const selectedYear = document.getElementById('year-filter').value;
+  const searchText = document.getElementById('search_mission').value.trim().toLowerCase();
+
+  let filtered = missions;
+
+  // FILTRE AGENCE
+  if (selectedAgency && selectedAgency !== '') {
+    filtered = filtered.filter(m => m.agency.includes(selectedAgency));
+  }
+
+  // FILTRE ANNÉE
+  if (selectedYear && selectedYear !== '') {
+    const yearInt = parseInt(selectedYear);
+    filtered = filtered.filter(m => {
+      const missionYear = new Date(m.launchDate).getFullYear();
+      return missionYear === yearInt;
+    });
+  }
+
+  // RECHERCHE TEXTE
+  if (searchText !== '') {
+    filtered = filtered.filter(m => 
+      m.name.toLowerCase().includes(searchText) ||
+      m.objective.toLowerCase().includes(searchText) ||
+      m.agency.toLowerCase().includes(searchText) ||
+      m.launchDate.includes(searchText)
     );
-  
+  }
+
   displayMissions(filtered);
-
-
-  // TODO: Filtrer les missions selon le nom ou lâ€™objectif
-  // Utilise la mÃ©thode .filter() sur le tableau missions
 }
 
-function filterByAgency(agency) {
 
-
-  // TODO: Filtrer selon lâ€™agence sÃ©lectionnÃ©e dans un menu dÃ©roulant
-  // Si "all" est sÃ©lectionnÃ©, afficher toutes les missions
-}
 
 function showFavorites(){
   const favoriteMissions = missions.filter(m => favorites.includes(m.id));
@@ -120,6 +132,7 @@ function showFavorites(){
 
     favorites.splice(index, 1);
     img.src = "assets/star1.png";
+    
   }
   
   localStorage.setItem('missionFavorites', JSON.stringify(favorites));
@@ -163,24 +176,26 @@ function showFavorites(){
   });
 });
 
-  // TODO: Ajouter ou retirer un favori selon sâ€™il est dÃ©jÃ  dans la liste
-  // Mets Ã  jour le localStorage aprÃ¨s chaque modification
-  // Affiche un message ou un style visuel (Ã©toile jaune, etc.)
+
 
 
 // ===============================
 // 5. CRUD - AJOUT, Ã‰DITION, SUPPRESSION
 // ===============================
 function openAddForm() {
-  document.getElementById('add-form-container').style.display = 'block';}
+  document.getElementById('add-form-container').style.display = 'flex';
+}
 function closeAddForm() {
-  document.getElementById('add-form-container').style.display = 'none';  
-  document.getElementById('new-name').value = '';
-  document.getElementById('new-agency').value = '';
-  document.getElementById('new-objective').value = '';
-  document.getElementById('new-date').value = '';
-  document.getElementById('new-image').value = '';
+  document.getElementById('add-form-container').style.display = 'none';
+  resetModal();
+  }  
+  window.onclick = function(event) {
+  const modal = document.getElementById('add-form-container');
+  if (event.target === modal) {
+    closeAddForm();
   }
+};
+  
 
 // --- AJOUT ---
 function addMission() {
@@ -191,36 +206,98 @@ function addMission() {
   const image = document.getElementById('new-image').value;
 
   if (!name || !agency || !objective || !launchDate || !image) {
-    alert("erreur ");
+    alert("remplir tous les champs");
     return;
   }
 
-  const newMission = { name, agency, objective, launchDate, image };
+  const newMission = { 
+    id: Date.now(), 
+    name, 
+    agency, 
+    objective, 
+    launchDate, 
+    image 
+  };
+
   missions.push(newMission);
   displayMissions(missions);
   closeAddForm();
 
   localStorage.setItem('missions', JSON.stringify(missions));
-  // TODO: Ajouter une nouvelle mission Ã  la liste
-  // VÃ©rifie les champs avec une validation de base avant lâ€™ajout
-  // Mets Ã  jour lâ€™affichage
+  
 }
 
 // --- Ã‰DITION ---
-// function editMission(id) {
-//   const index = missions.findIndex(m => m.id === id);
-//   if (index === -1) return;
+function editMission(missionId) {
+  
+if (!missionId) {
+    alert("ID de mission manquant !");
+    return;
+  }
 
-//   const newName = prompt("Nouveau nom :", missions[index].name);
-//   const newObjective = prompt("Nouvel objectif :", missions[index].objective);
+const index = missions.findIndex(m => m.id === missionId);  
+if (index === -1) {
+    alert("Mission non trouvée.");
+    return;
+  }
 
-//   if (newName && newObjective) {
-//     missions[index].name = newName.trim();
-//     missions[index].objective = newObjective.trim();
-//     localStorage.setItem('missions', JSON.stringify(missions));
-//     displayMissions(missions);
-//   }
-// }
+  const mission = missions[index];
+
+  document.getElementById('modal-title').textContent = 'Edit Mission';
+
+  document.getElementById('new-name').value = mission.name;
+  document.getElementById('new-agency').value = mission.agency;
+  document.getElementById('new-objective').value = mission.objective;
+  document.getElementById('new-date').value = mission.launchDate;
+  document.getElementById('new-image').value = mission.image;
+
+  document.getElementById('edit-index').value = index;
+
+  const submitBtn = document.getElementById('submit-btn');
+  submitBtn.textContent = 'Update';
+  submitBtn.onclick = updateMission;
+
+  openAddForm();
+
+}
+  
+function resetModal() {
+  const submitBtn = document.getElementById('submit-btn');
+  submitBtn.textContent = 'Ajouter';
+  submitBtn.onclick = addMission;
+
+  document.getElementById('modal-title').textContent = 'Ajouter une Mission';
+  document.getElementById('edit-index').value = '-1';
+
+  const form = document.getElementById('add-mission-form');
+  if (form) form.reset();
+}
+
+  function updateMission() {
+  const index = parseInt(document.getElementById('edit-index').value);
+  if (index === -1 || !missions[index]) {
+    alert("Erreur : mission non trouvée.");
+    return;
+  }
+
+  const name = document.getElementById('new-name').value.trim();
+  const agency = document.getElementById('new-agency').value.trim();
+  const objective = document.getElementById('new-objective').value.trim();
+  const launchDate = document.getElementById('new-date').value;
+  const image = document.getElementById('new-image').value.trim();
+
+  if (!name || !agency || !objective || !launchDate || !image) {
+    alert("Veuillez remplir tous les champs !");
+    return;
+  }
+
+missions[index] = { name, agency, objective, launchDate, image };
+
+localStorage.setItem('missions', JSON.stringify(missions));
+  displayMissions(missions);
+  closeAddForm();
+
+}
 
 // --- SUPPRESSION ---
 function deleteMission(id) {
@@ -237,9 +314,10 @@ function deleteMission(id) {
 // ===============================
 // 6. VALIDATION DE FORMULAIRE
 // ===============================
-function validateForm() {
-  const fields = ['first-name', 'last-name', 'email', 'phone-number', 'message'];
-  fields.forEach(id => clearError(id));
+function validateForm(event) {
+  if (event) event.preventDefault();
+
+  clearAllErrors();
 
   const firstName = document.getElementById('first-name').value.trim();
   const lastName = document.getElementById('last-name').value.trim();
@@ -249,82 +327,85 @@ function validateForm() {
   const subjectChecked = document.querySelector('input[name="subject"]:checked');
 
   let isValid = true;
-  let errorMessage = '';
 
   if (!firstName) {
-    errorMessage += 'Le prénom est obligatoire.\n';
-    highlightError('first-name');
+    showError('first-name', 'Le prénom est obligatoire.');
+    isValid = false;
+  } else if (firstName.length < 3) {
+    showError('first-name', 'Le prénom doit contenir au moins 3 lettres.');
     isValid = false;
   }
+
+
   if (!lastName) {
-    errorMessage += 'Le nom est obligatoire.\n';
-    highlightError('last-name');
+    showError('last-name', 'Le nom est obligatoire.');
+    isValid = false;
+  } else if (lastName.length < 3) {
+    showError('last-name', 'Le nom doit contenir au moins 3 lettres.');
     isValid = false;
   }
+
+
   if (!email) {
-    errorMessage += 'L\'email est obligatoire.\n';
-    highlightError('email');
+    showError('email', 'L\'email est obligatoire.');
+    isValid = false;
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showError('email', 'Veuillez entrer un email valide.');
     isValid = false;
   }
-  if (!phone) {
-    errorMessage += 'Le téléphone est obligatoire.\n';
-    highlightError('phone-number');
+
+    if (!phone) {
+    showError('phone-number', 'Le téléphone est obligatoire.');
+    isValid = false;
+  } else if (!/^\d{10}$/.test(phone)) {
+    showError('phone-number', 'Le téléphone doit contenir 10 chiffres.');
     isValid = false;
   }
+
   if (!message) {
-    errorMessage += 'Le message est obligatoire.\n';
-    highlightError('message');
-    isValid = false;
-  }
-
-  if (firstName && firstName.length < 3) {
-    errorMessage += 'Le prénom doit contenir au moins 3 lettres.\n';
-    highlightError('first-name');
-    isValid = false;
-  }
-  if (lastName && lastName.length < 3) {
-    errorMessage += 'Le nom doit contenir au moins 3 lettres.\n';
-    highlightError('last-name');
-    isValid = false;
-  }
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (email && !emailRegex.test(email)) {
-    errorMessage += 'Veuillez entrer un email valide (ex: user@domaine.com).\n';
-    highlightError('email');
-    isValid = false;
-  }
-
-  const phoneRegex = /^\d{10}$/;
-  if (phone && !phoneRegex.test(phone)) {
-    errorMessage += 'Le téléphone doit contenir exactement 10 chiffres.\n';
-    highlightError('phone-number');
+    showError('message', 'Le message est obligatoire.');
     isValid = false;
   }
 
   if (!subjectChecked) {
-    errorMessage += 'Veuillez sélectionner un sujet.\n';
+    showError('subject', 'Veuillez sélectionner un sujet.');
     isValid = false;
   }
 
-  if (!isValid) {
-    alert(errorMessage.trim());
-    return false; 
+  if (isValid) {
+    window.location.href = 'contact_us_success.html';
   }
 
-  window.location.href = 'contact_us_success.html';
-  return false; 
+  return false;
 }
 
 
-function highlightError(fieldId) {
-  const el = document.getElementById(fieldId);
-  if (el) {
-    el.style.borderColor = 'red';
-    el.classList.add('error');
+function showError(fieldId, message) {
+  const input = document.getElementById(fieldId);
+  const errorSpan = document.getElementById(`error-${fieldId}`);
+
+  if (input) input.classList.add('error');
+  if (errorSpan) {
+    errorSpan.textContent = message;
+    errorSpan.style.display = 'block';
   }
 }
 
+function clearError(fieldId) {
+  const input = document.getElementById(fieldId);
+  const errorSpan = document.getElementById(`error-${fieldId}`);
+
+  if (input) input.classList.remove('error');
+  if (errorSpan) {
+    errorSpan.textContent = '';
+    errorSpan.style.display = 'none';
+  }
+}
+
+function clearAllErrors() {
+  const fields = ['first-name', 'last-name', 'email', 'phone-number', 'message', 'subject'];
+  fields.forEach(field => clearError(field));
+}
 function clearError(fieldId) {
   const el = document.getElementById(fieldId);
   if (el) {

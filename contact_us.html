@@ -61,15 +61,17 @@
 
         
     <div class="form-contact">
-    <form id="contact-form" onsubmit="return validateForm()">
+    <form id="contact-form" onsubmit="return validateForm(event)">
         <div class="form-row">
             <div class="form-group">
                 <label for="first-name">First Name</label>
                 <input class="form-input" type="text" id="first-name" name="first-name">
+                <span class="error-message" id="error-first-name"></span>
             </div>
             <div class="form-group">
                 <label for="last-name">Last Name</label>
                 <input class="form-input" type="text" id="last-name" name="last-name">
+                <span class="error-message" id="error-last-name"></span>
             </div>
         </div>
   
@@ -78,10 +80,12 @@
             <div class="form-group">
                 <label for="email">Email</label>
                 <input class="form-input" type="email" id="email" name="email">
+                <span class="error-message" id="error-email"></span>
             </div>
             <div class="form-group">
                 <label for="phone-number">Phone Number</label>
                 <input class="form-input" type="tel" id="phone-number" name="phone-number">
+                <span class="error-message" id="error-phone-number"></span>
             </div>
         </div>
 
@@ -100,14 +104,16 @@
                 <input type="radio" id="inquiry4" name="subject" value="General Inquiry">
                 <label for="inquiry4">General Inquiry</label>
             </div>
+            <span class="error-message" id="error-subject"></span>
         </div>
 
         <div class="form-group message-area">
             <label for="message">Message</label>
             <textarea id="message" name="message" placeholder="Write your message.."></textarea>
+            <span class="error-message" id="error-message"></span>
         </div>
 
-        <button type="submit" class="send-message-btn">Send Message</button>
+        <button type="submit" class="send-message-btn" >Send Message</button>
     </form>
 </div>
 </section>
