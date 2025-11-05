@@ -31,7 +31,7 @@ function displayMissions(list) {
           <p><strong>Agence :</strong> ${mission.agency}</p>
           <p class="goal"><strong>Objectif :</strong> ${mission.objective}</p>
           <p class="date"><strong>Date de lancement :</strong> ${mission.launchDate}</p>
-
+            <div class="icons-btns">
           <button class="icon_edit" onclick="editMission(${mission.id})">
             <i class="fa-solid fa-pen"></i>
           </button>
@@ -42,6 +42,7 @@ function displayMissions(list) {
             <img src="${isFavorite ? 'assets/star1.png' : 'assets/star.png'}" 
                  alt="Favorite" class="fav-img">
           </button>
+          </div>
         </div>
       </div>
     `;
@@ -58,7 +59,7 @@ function updateFavoriteCount() {
   favContainer.innerHTML = '';
 
   if (count === 0) {
-    favContainer.innerHTML = '<p style="text-align:center; color:#aaa;">Aucune mission favorite</p>';
+    favContainer.innerHTML = '<p style="text-align:center; color:#aaa;">No favorite mission</p>';
     return;
   }
 
@@ -69,9 +70,10 @@ function updateFavoriteCount() {
         <img src="${mission.image}" alt="${mission.name}">
         <div>
           <h4>${mission.name}</h4>
+          <p>${mission.objective}</p>
           <p>${mission.agency}</p>
+          <h4>${mission.launchDate}</h4>
         </div>
-        <button class="remove-fav" data-id="${mission.id}">×</button>
       </div>
     `;
     favContainer.innerHTML += favItem;
