@@ -700,7 +700,9 @@ label {
 } */
 
 textarea {
-    border-bottom: 1px solid #000;
+    resize: none;
+    width: 100%;
+    height: 100px;
     padding-top: 10px; 
 }
 
