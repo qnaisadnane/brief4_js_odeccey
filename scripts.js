@@ -222,7 +222,7 @@ function addMission() {
     return;
   }
 
-  const newMission = { id: Date.now(), name, agency, objective, launchDate, image };
+  const newMission = { id: Date, name, agency, objective, launchDate, image };
   missions.push(newMission);
   localStorage.setItem('missions', JSON.stringify(missions));
   displayMissions(missions);
